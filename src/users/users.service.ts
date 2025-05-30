@@ -22,4 +22,10 @@ export class UsersService {
 
     return this.userRepository.create(newUser);
   }
+
+  async findByEmail(email: string): Promise<User> {
+    const res = await this.userRepository.findOneOrFail({ where: { email } });
+
+    return res;
+  }
 }
