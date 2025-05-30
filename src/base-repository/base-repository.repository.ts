@@ -52,6 +52,12 @@ export class BaseRepository<T extends DataModel, E = DeepPartial<T>> {
     return entity;
   }
 
+  async findOne(options?: FindOneOptions<T>): Promise<T | null> {
+    const entity = await this.repository.findOne(options as FindOneOptions<T>);
+
+    return entity;
+  }
+
   async update(id: DataModel['id'], updateDto: DeepPartial<T>): Promise<T> {
     await this.findOneByIdOrFail(id);
 

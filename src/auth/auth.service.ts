@@ -4,6 +4,7 @@ import * as jwt from 'jsonwebtoken';
 import { LoginDto } from './dtos/login.dto';
 import { UsersService } from 'src/users/users.service';
 import { compare } from 'bcrypt';
+import { SignUpDto } from './dtos/sign-up.dto';
 
 export interface JwtPayload {
   userId: string;
@@ -58,5 +59,9 @@ export class AuthService {
     });
 
     return { token };
+  }
+
+  async signUp(payload: SignUpDto): Promise<void> {
+    await this.userService.createUser(payload);
   }
 }
