@@ -7,7 +7,7 @@ import { BaseRepository } from './base-repository.repository';
 export function getBaseRepositoryToken<T extends DataModel>(
   entity: Type<T>,
 ): symbol {
-  return Symbol(`BaseRepository<${entity.name}>`);
+  return Symbol.for(`BaseRepository<${entity.name}>`);
 }
 
 @Module({})
