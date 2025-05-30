@@ -3,6 +3,7 @@ import { BaseRepository } from 'src/base-repository/base-repository.repository';
 import { InjectBaseRepository } from 'src/commom/decorators/inject-base-repository';
 import { CreateUserDto } from './dtos/create-user.dto';
 import { User } from './entities/user.entity';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UsersService {
@@ -12,6 +13,13 @@ export class UsersService {
   ) {}
 
   async createUser(createDto: CreateUserDto): Promise<User> {
-    return this.userRepository.create(createDto);
+    const { password, email, name } = createDto;
+
+    await this.userRepository.findOneOrFail({ where: { email } });
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const newUser: CreateUserDto = { name, email, password: hashedPassword };
+
+    return this.userRepository.create(newUser);
   }
 }

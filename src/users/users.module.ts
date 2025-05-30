@@ -7,6 +7,7 @@ import { UsersService } from './users.service';
 @Module({
   imports: [BaseRepositoryCoreModule.forFeature(User)],
   providers: [UsersService],
+  exports: [UsersService],
   controllers: [UsersController],
 })
 export class UsersModule {}
