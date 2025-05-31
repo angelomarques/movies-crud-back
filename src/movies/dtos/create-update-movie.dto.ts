@@ -1,4 +1,5 @@
-import { IsNotEmpty, IsNumber, IsUrl } from 'class-validator';
+import { Type } from 'class-transformer';
+import { IsDate, IsNotEmpty, IsNumber, IsUrl } from 'class-validator';
 
 export class CreateUpdateMovieDto {
   @IsNotEmpty()
@@ -14,10 +15,16 @@ export class CreateUpdateMovieDto {
   @IsNumber()
   budget: number;
 
+  @Type(() => Date)
+  @IsDate()
   @IsNotEmpty()
-  releaseDate: string;
+  releaseDate: Date;
 
   @IsNotEmpty()
   @IsUrl()
   imageUrl: string;
+
+  @IsNotEmpty()
+  @IsNumber()
+  duration: number;
 }

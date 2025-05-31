@@ -21,10 +21,14 @@ export class Movie extends DataModel {
   budget: number;
 
   @IsNotEmpty()
-  @Column({ name: 'release_date' })
-  releaseDate: string;
+  @Column({ name: 'release_date', type: 'timestamp' })
+  releaseDate: Date;
 
   @IsNotEmpty()
   @Column({ name: 'image_url' })
   imageUrl: string;
+
+  @IsNotEmpty()
+  @Column({ type: 'int' })
+  duration: number;
 }
