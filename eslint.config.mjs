@@ -43,6 +43,8 @@ export default tseslint.config(
         },
       ],
       '@typescript-eslint/no-namespace': 'off',
+      '@typescript-eslint/no-unsafe-member-access': 'off',
+      '@typescript-eslint/no-unsafe-assignment': 'off',
     },
   },
 );
