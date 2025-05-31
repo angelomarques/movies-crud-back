@@ -66,7 +66,7 @@ export class BaseRepository<T extends DataModel, E = DeepPartial<T>> {
     return this.findOneByIdOrFail(id);
   }
 
-  async remove(id: DataModel['id']): Promise<void> {
+  async delete(id: DataModel['id']): Promise<void> {
     const result = await this.repository.delete(id);
 
     if (result.affected === 0) {
