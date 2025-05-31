@@ -9,7 +9,7 @@ import {
   Query,
 } from '@nestjs/common';
 import { Auth } from 'src/auth/auth.decorator';
-import { PaginationQueryDto } from 'src/commom/dto/pagination-query';
+import { MoviePaginationQueryDto } from 'src/movies/dtos/pagination-query';
 import { CreateUpdateMovieDto } from './dtos/create-update-movie.dto';
 import { MoviesService } from './movies.service';
 
@@ -19,7 +19,7 @@ export class MoviesController {
 
   @Auth()
   @Get()
-  findAll(@Query() paginationQueryDto: PaginationQueryDto) {
+  findAll(@Query() paginationQueryDto: MoviePaginationQueryDto) {
     return this.moviesService.findAll(paginationQueryDto);
   }
 

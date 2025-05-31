@@ -3,12 +3,17 @@ import {
   FindManyOptions,
   FindOneOptions,
   Repository,
+  SelectQueryBuilder,
 } from 'typeorm';
 import { NotFoundException } from '@nestjs/common';
 import { DataModel } from 'src/data/entities/data.entity';
 
 export class BaseRepository<T extends DataModel, E = DeepPartial<T>> {
   constructor(protected readonly repository: Repository<T>) {}
+
+  createQueryBuilder(alias: string): SelectQueryBuilder<T> {
+    return this.repository.createQueryBuilder(alias);
+  }
 
   async create(createDto: E): Promise<T> {
     const entity = this.repository.create(createDto as DeepPartial<T>);

@@ -3,7 +3,7 @@ import { InjectBaseRepository } from 'src/commom/decorators/inject-base-reposito
 import { Movie } from './entities/movie.entity';
 import { BaseRepository } from 'src/base-repository/base-repository.repository';
 import { CreateUpdateMovieDto } from './dtos/create-update-movie.dto';
-import { PaginationQueryDto } from 'src/commom/dto/pagination-query';
+import { MoviePaginationQueryDto } from 'src/movies/dtos/pagination-query';
 
 @Injectable()
 export class MoviesService {
@@ -21,15 +21,36 @@ export class MoviesService {
     return res;
   }
 
-  async findAll(paginationQueryDto: PaginationQueryDto) {
-    const { limit = 10, page = 1 } = paginationQueryDto;
+  async findAll(paginationQueryDto: MoviePaginationQueryDto) {
+    const { limit = 10, page = 1, durationCategory } = paginationQueryDto;
 
     const skip = (page - 1) * limit;
 
-    const [data, total] = await this.movieRepository.findAndCount({
-      skip,
-      take: limit,
-    });
+    const queryBuilder = this.movieRepository.createQueryBuilder('movie');
+
+    queryBuilder.skip(skip).take(limit);
+
+    if (durationCategory === 'short') {
+      queryBuilder.andWhere(
+        'movie.duration >= :min AND movie.duration < :max',
+        {
+          min: 0,
+          max: 50,
+        },
+      );
+    } else if (durationCategory === 'medium') {
+      queryBuilder.andWhere(
+        'movie.duration >= :min AND movie.duration < :max',
+        {
+          min: 50,
+          max: 100,
+        },
+      );
+    } else if (durationCategory === 'long') {
+      queryBuilder.andWhere('movie.duration >= :min', { min: 100 });
+    }
+
+    const [data, total] = await queryBuilder.getManyAndCount();
 
     return {
       data,
