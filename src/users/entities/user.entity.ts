@@ -9,7 +9,7 @@ export class User extends DataModel {
   name: string;
 
   @IsNotEmpty()
-  @Column()
+  @Column({ unique: true })
   email: string;
 
   @IsNotEmpty()
