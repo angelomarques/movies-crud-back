@@ -3,6 +3,7 @@ import { InjectBaseRepository } from 'src/commom/decorators/inject-base-reposito
 import { Movie } from './entities/movie.entity';
 import { BaseRepository } from 'src/base-repository/base-repository.repository';
 import { CreateUpdateMovieDto } from './dtos/create-update-movie.dto';
+import { PaginationQueryDto } from 'src/commom/dto/pagination-query';
 
 @Injectable()
 export class MoviesService {
@@ -20,10 +21,26 @@ export class MoviesService {
     return res;
   }
 
-  async findAll(): Promise<Movie[]> {
-    const res = await this.movieRepository.findAll();
+  async findAll(paginationQueryDto: PaginationQueryDto) {
+    const { limit = 10, page = 1 } = paginationQueryDto;
 
-    return res;
+    const skip = (page - 1) * limit;
+
+    const [data, total] = await this.movieRepository.findAndCount({
+      skip,
+      take: limit,
+    });
+
+    return {
+      data,
+      meta: {
+        total,
+        page,
+        limit,
+        count: data.length,
+        totalPages: Math.ceil(total / limit),
+      },
+    };
   }
 
   async create(createMovieDto: CreateUpdateMovieDto): Promise<Movie> {

@@ -6,11 +6,12 @@ import {
   Param,
   Post,
   Put,
+  Query,
 } from '@nestjs/common';
-import { MoviesService } from './movies.service';
 import { Auth } from 'src/auth/auth.decorator';
-import { Movie } from './entities/movie.entity';
+import { PaginationQueryDto } from 'src/commom/dto/pagination-query';
 import { CreateUpdateMovieDto } from './dtos/create-update-movie.dto';
+import { MoviesService } from './movies.service';
 
 @Controller('movies')
 export class MoviesController {
@@ -18,8 +19,8 @@ export class MoviesController {
 
   @Auth()
   @Get()
-  findAll(): Promise<Movie[]> {
-    return this.moviesService.findAll();
+  findAll(@Query() paginationQueryDto: PaginationQueryDto) {
+    return this.moviesService.findAll(paginationQueryDto);
   }
 
   @Auth()

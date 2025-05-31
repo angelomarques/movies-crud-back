@@ -1,4 +1,9 @@
-import { DeepPartial, FindOneOptions, Repository } from 'typeorm';
+import {
+  DeepPartial,
+  FindManyOptions,
+  FindOneOptions,
+  Repository,
+} from 'typeorm';
 import { NotFoundException } from '@nestjs/common';
 import { DataModel } from 'src/data/entities/data.entity';
 
@@ -13,6 +18,10 @@ export class BaseRepository<T extends DataModel, E = DeepPartial<T>> {
 
   async findAll(): Promise<T[]> {
     return this.repository.find();
+  }
+
+  async findAndCount(options?: FindManyOptions<T>): Promise<[T[], number]> {
+    return this.repository.findAndCount(options);
   }
 
   async findOneById(
