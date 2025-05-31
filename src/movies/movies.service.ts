@@ -28,6 +28,7 @@ export class MoviesService {
       durationCategory,
       startDate,
       endDate,
+      search,
     } = paginationQueryDto;
 
     const skip = (page - 1) * limit;
@@ -62,6 +63,12 @@ export class MoviesService {
 
     if (endDate) {
       queryBuilder.andWhere('movie.releaseDate <= :endDate', { endDate });
+    }
+
+    if (search) {
+      queryBuilder.andWhere('LOWER(movie.title) LIKE :search', {
+        search: `%${search.toLowerCase()}%`,
+      });
     }
 
     const [data, total] = await queryBuilder.getManyAndCount();

@@ -1,5 +1,11 @@
 import { Type } from 'class-transformer';
-import { IsDate, IsIn, IsOptional, IsPositive } from 'class-validator';
+import {
+  IsDate,
+  IsIn,
+  IsOptional,
+  IsPositive,
+  IsString,
+} from 'class-validator';
 
 export class MoviePaginationQueryDto {
   @IsOptional()
@@ -25,4 +31,8 @@ export class MoviePaginationQueryDto {
   @IsDate()
   @IsOptional()
   endDate: Date;
+
+  @IsOptional()
+  @IsString()
+  search?: string;
 }
