@@ -1,5 +1,5 @@
 import { Type } from 'class-transformer';
-import { IsIn, IsOptional, IsPositive } from 'class-validator';
+import { IsDate, IsIn, IsOptional, IsPositive } from 'class-validator';
 
 export class MoviePaginationQueryDto {
   @IsOptional()
@@ -15,4 +15,14 @@ export class MoviePaginationQueryDto {
   @IsOptional()
   @IsIn(['short', 'medium', 'long'])
   durationCategory?: 'short' | 'medium' | 'long';
+
+  @Type(() => Date)
+  @IsDate()
+  @IsOptional()
+  startDate: Date;
+
+  @Type(() => Date)
+  @IsDate()
+  @IsOptional()
+  endDate: Date;
 }

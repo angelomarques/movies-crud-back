@@ -22,7 +22,13 @@ export class MoviesService {
   }
 
   async findAll(paginationQueryDto: MoviePaginationQueryDto) {
-    const { limit = 10, page = 1, durationCategory } = paginationQueryDto;
+    const {
+      limit = 10,
+      page = 1,
+      durationCategory,
+      startDate,
+      endDate,
+    } = paginationQueryDto;
 
     const skip = (page - 1) * limit;
 
@@ -48,6 +54,14 @@ export class MoviesService {
       );
     } else if (durationCategory === 'long') {
       queryBuilder.andWhere('movie.duration >= :min', { min: 100 });
+    }
+
+    if (startDate) {
+      queryBuilder.andWhere('movie.releaseDate >= :startDate', { startDate });
+    }
+
+    if (endDate) {
+      queryBuilder.andWhere('movie.releaseDate <= :endDate', { endDate });
     }
 
     const [data, total] = await queryBuilder.getManyAndCount();
