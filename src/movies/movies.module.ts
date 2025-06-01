@@ -9,5 +9,6 @@ import { AuthModule } from 'src/auth/auth.module';
   imports: [BaseRepositoryCoreModule.forFeature(Movie), AuthModule],
   controllers: [MoviesController],
   providers: [MoviesService],
+  exports: [MoviesService],
 })
 export class MoviesModule {}

@@ -7,6 +7,8 @@ import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { MoviesModule } from './movies/movies.module';
 import { FilesModule } from './files/files.module';
+import { EmailModule } from './email/email.module';
+import { TasksModule } from './tasks/tasks.module';
 
 @Module({
   imports: [
@@ -24,6 +26,8 @@ import { FilesModule } from './files/files.module';
     AuthModule,
     MoviesModule,
     FilesModule,
+    EmailModule,
+    TasksModule,
   ],
   controllers: [AppController],
   providers: [AppService],

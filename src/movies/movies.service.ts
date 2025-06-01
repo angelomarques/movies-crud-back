@@ -4,6 +4,8 @@ import { Movie } from './entities/movie.entity';
 import { BaseRepository } from 'src/base-repository/base-repository.repository';
 import { CreateUpdateMovieDto } from './dtos/create-update-movie.dto';
 import { MoviePaginationQueryDto } from 'src/movies/dtos/pagination-query';
+import { startOfDay, endOfDay } from 'date-fns';
+import { Between } from 'typeorm';
 
 @Injectable()
 export class MoviesService {
@@ -104,5 +106,18 @@ export class MoviesService {
     const res = await this.movieRepository.delete(id);
 
     return res;
+  }
+
+  async findReleasingToday(): Promise<Movie[]> {
+    const todayStart = startOfDay(new Date());
+    const todayEnd = endOfDay(new Date());
+
+    const movies = await this.movieRepository.findAll({
+      where: {
+        releaseDate: Between(todayStart, todayEnd),
+      },
+    });
+
+    return movies;
   }
 }

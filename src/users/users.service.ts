@@ -34,4 +34,8 @@ export class UsersService {
 
     return res;
   }
+
+  findAll(): Promise<User[]> {
+    return this.userRepository.findAll();
+  }
 }

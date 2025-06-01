@@ -21,8 +21,8 @@ export class BaseRepository<T extends DataModel, E = DeepPartial<T>> {
     return this.repository.save(entity);
   }
 
-  async findAll(): Promise<T[]> {
-    return this.repository.find();
+  async findAll(options?: FindManyOptions<T>): Promise<T[]> {
+    return this.repository.find(options);
   }
 
   async findAndCount(options?: FindManyOptions<T>): Promise<[T[], number]> {
