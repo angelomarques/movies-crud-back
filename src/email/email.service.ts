@@ -32,7 +32,7 @@ export class EmailService {
       return;
     }
 
-    const subject = '🎬 New Movies Released Today!';
+    const subject = '🎬 Novos filmes que lançaram hoje!';
     let htmlContent = `<h1>Olá ${user.name || 'there'},</h1>`;
     htmlContent += `<p>Dá uma olhada nesses filmes que lançaram hoje:</p>`;
     htmlContent += '<ul>';
