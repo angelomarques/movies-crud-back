@@ -1,6 +1,7 @@
 import { IsNotEmpty } from 'class-validator';
 import { DataModel } from 'src/data/entities/data.entity';
 import { Column, Entity } from 'typeorm';
+import { MovieGenre } from '../enums/genre.enum';
 
 @Entity('movies')
 export class Movie extends DataModel {
@@ -31,4 +32,12 @@ export class Movie extends DataModel {
   @IsNotEmpty()
   @Column({ type: 'int' })
   duration: number;
+
+  @Column({
+    type: 'enum',
+    enum: MovieGenre,
+    default: MovieGenre.OTHER,
+  })
+  @IsNotEmpty()
+  genre: MovieGenre;
 }
