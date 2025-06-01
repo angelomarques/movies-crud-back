@@ -1,5 +1,6 @@
 import { Type } from 'class-transformer';
-import { IsDate, IsNotEmpty, IsNumber, IsUrl } from 'class-validator';
+import { IsDate, IsEnum, IsNotEmpty, IsNumber, IsUrl } from 'class-validator';
+import { MovieGenre } from '../enums/genre.enum';
 
 export class CreateUpdateMovieDto {
   @IsNotEmpty()
@@ -27,4 +28,8 @@ export class CreateUpdateMovieDto {
   @IsNotEmpty()
   @IsNumber()
   duration: number;
+
+  @IsEnum(MovieGenre)
+  @IsNotEmpty()
+  genre: MovieGenre;
 }
